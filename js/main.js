@@ -49,19 +49,22 @@ formTouit.addEventListener('submit', event => {
 });
 
 
+const touitList = () => {
+    utils.allTouits()
+    .then(
+        allTouits => allTouits.messages.map(
+            oneTouit => {
+                touit.createContent(oneTouit.name, oneTouit.message, oneTouit.id, oneTouit.comments_count);
+            }
+        )
+    )
+    .then(
+        () => document.querySelector('.loading-container').remove()
+    );
+}
 
 
-utils.allTouits()
-        .then(
-            allTouits => allTouits.messages.map(
-                oneTouit => {
-                    touit.createContent(oneTouit.name, oneTouit.message, oneTouit.id, oneTouit.comments_count);
-                }
-            )
-        )
-        .then(
-            () => document.querySelector('.loading-container').remove()
-        )
+
 
 utils.getTrendingsTags()
         .then(
@@ -72,7 +75,7 @@ utils.getTrendingsTags()
                     }
                 }
             }
-        )
+        );
 
 utils.getTopLikedTouit()
         .then(
@@ -80,7 +83,23 @@ utils.getTopLikedTouit()
                 const topTouitToCreate = touit.createContent(topTouit.top[0].name, topTouit.top[0].message, `top-${topTouit.top[0].id}`, topTouit.top[0].comments_count);
                 utils.topTouit(topTouitToCreate);
             }
-        )
+        );
 
+
+const refreshTouits = () => {
+    const touitContainer = document.querySelector('.row.text-start.flex-column-reverse');
+    const loadingGif = utils.createLoadingGif();
+    while(touitContainer.firstChild){
+        touitContainer.removeChild(touitContainer.firstChild);
+    }
+    touitContainer.appendChild(loadingGif);
+    touitList();
+    setTimeout(
+        () => {
+            refreshTouits();
+        }, 300000);
+}
+
+refreshTouits();
 
 

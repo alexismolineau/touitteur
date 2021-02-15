@@ -16,6 +16,17 @@ class Utils {
         commentButton.disabled = !(nbComment + 1);
     }
 
+    createLoadingGif = () => {
+        const container = document.createElement('div');
+        container.classList.add('loading-container', 'text-center');
+        const imgLoading = document.createElement('img');
+        imgLoading.src = './loading.gif';
+        imgLoading.alt = 'chargement...';
+        imgLoading.classList.add('m-auto');
+        container.appendChild(imgLoading);
+        return container;
+    }
+
     topTouit = touit => {
         document.querySelector('.top-touits').appendChild(touit);
     }
