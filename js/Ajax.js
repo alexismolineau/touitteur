@@ -3,6 +3,7 @@ class Ajax {
     getContentFromTouiter = url => {
         return new Promise(
             (resolve, reject) => {
+                /*
                 const xmlHttp = new XMLHttpRequest();
                 xmlHttp.responseType = "json";
                 xmlHttp.open( "GET", url, true);
@@ -16,7 +17,10 @@ class Ajax {
                 xmlHttp.error = error => {
                     reject(error);
                 }
-                xmlHttp.send();
+                xmlHttp.send();*/
+                fetch(url)
+                    .then(response => resolve(response.json()))
+                    .catch(response => reject(response.json()));
             }
         )
     }
@@ -24,7 +28,7 @@ class Ajax {
     postContentToTouiter = (url, data) => {
         return new Promise(
             (resolve, reject) => {
-                const xmlHttp = new XMLHttpRequest();
+                /*const xmlHttp = new XMLHttpRequest();
                 xmlHttp.open( "POST", url, true);
                 xmlHttp.onload = () => {
                     if(xmlHttp.readyState === 4 && xmlHttp.status === 200){
@@ -40,7 +44,14 @@ class Ajax {
                 xmlHttp.error = error => {
                     reject(error);
                 }
-                xmlHttp.send(data);
+                xmlHttp.send(data);*/
+                const options = {
+                    method: 'POST',
+                    body: data
+                }
+                fetch(url, options)
+                    .then(response => resolve(response.json()))
+                    .catch(response => reject(response.json()));
             }
         )
     }
@@ -48,7 +59,7 @@ class Ajax {
     putContentToTouitter = (url, data) => {
         return new Promise(
             (resolve, reject) => {
-                const xmlHttp = new XMLHttpRequest();
+                /*const xmlHttp = new XMLHttpRequest();
                 xmlHttp.open( "PUT", url, true);
                 xmlHttp.onload = () => {
                     if(xmlHttp.readyState === 4 && xmlHttp.status === 200){
@@ -64,7 +75,14 @@ class Ajax {
                 xmlHttp.error = error => {
                     reject(error);
                 }
-                xmlHttp.send(data);
+                xmlHttp.send(data);*/
+                const options = {
+                    method: 'PUT',
+                    body: data
+                }
+                fetch(url, options)
+                    .then(response => resolve(response.json()))
+                    .catch(response => reject(response.json()));
             }
         )
     }
@@ -72,7 +90,7 @@ class Ajax {
     deleteContentOnTouitter = (url, data) => {
         return new Promise(
             (resolve, reject) => {
-                const xmlHttp = new XMLHttpRequest();
+                /*const xmlHttp = new XMLHttpRequest();
                 xmlHttp.open( "DELETE", url, true);
                 xmlHttp.onload = () => {
                     if(xmlHttp.readyState === 4 && xmlHttp.status === 200){
@@ -88,7 +106,14 @@ class Ajax {
                 xmlHttp.error = error => {
                     reject(error);
                 }
-                xmlHttp.send(data);
+                xmlHttp.send(data);*/
+                const options = {
+                    method: 'DELETE',
+                    body: data
+                }
+                fetch(url, options)
+                    .then(response => resolve(response.json()))
+                    .catch(response => reject(response.json()));
             }
         )
     }
