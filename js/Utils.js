@@ -32,8 +32,8 @@ class Utils {
     }
 
 
-    allTouits = async () => {
-        return await this.ajax.getContentFromTouiter("http://touiteur.cefim-formation.org/list");
+    allTouits = async ts => {
+        return await this.ajax.getContentFromTouiter(`http://touiteur.cefim-formation.org/list?ts=${ts}`);
     }
 
     getComments = async id => {

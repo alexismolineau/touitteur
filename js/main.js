@@ -28,9 +28,6 @@ formTouit.addEventListener('submit', event => {
     const addTouit = new AddTouit(formPseudo, formContent);
     addTouit.postTouit()
         .then(
-            addTouit.createTouit()
-        )
-        .then(
             () => {
                 const alertSuccess = alert.createAlertBox('alert-success', 'Votre Touit a bien été envoyé')
                 formTouit.prepend(alertSuccess)
@@ -48,19 +45,23 @@ formTouit.addEventListener('submit', event => {
     return;
 });
 
+let ts = 0;
 
 const touitList = () => {
-    utils.allTouits()
+    utils.allTouits(ts)
     .then(
-        allTouits => allTouits.messages.map(
-            oneTouit => {
-                touit.createContent(oneTouit.name, oneTouit.message, oneTouit.id, oneTouit.comments_count);
+        allTouits => {
+            if(allTouits.messages.length > 0){
+                ts = allTouits.messages[allTouits.messages.length -1].ts;
             }
-        )
+            allTouits.messages.map(
+                oneTouit => {
+                    touit.createContent(oneTouit.name, oneTouit.message, oneTouit.id, oneTouit.comments_count);
+                }
+            )
+        }
     )
-    .then(
-        () => document.querySelector('.loading-container').remove()
-    );
+
 }
 
 
@@ -87,17 +88,11 @@ utils.getTopLikedTouit()
 
 
 const refreshTouits = () => {
-    const touitContainer = document.querySelector('.row.text-start.flex-column-reverse');
-    const loadingGif = utils.createLoadingGif();
-    while(touitContainer.firstChild){
-        touitContainer.removeChild(touitContainer.firstChild);
-    }
-    touitContainer.appendChild(loadingGif);
     touitList();
     setTimeout(
         () => {
             refreshTouits();
-        }, 300000);
+        }, 2000);
 }
 
 refreshTouits();
